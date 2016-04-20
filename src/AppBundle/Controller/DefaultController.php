@@ -24,6 +24,6 @@ class DefaultController extends Controller
      */
     public function cadastrarAction(Request $request)
     {
-        return $this->render();
+        return $this->render('default/cadastrar.html.twig');
     }
 }
