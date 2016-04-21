@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+use AppBundle\Entity\Filmes;
 /**
  * Description of FilmesController
  *
@@ -37,6 +38,14 @@ class FilmesController extends Controller
      */
     public function cadastroAction()
     {
+        $filme = new Filmes();
+        $filme->setGenero('Terror');
+        $filme->setLancamento(true);
+        $filme->setNome('Rec');
+        
+        $doctrine = $this->getDoctrine()->getEntityManager();//motor que grava e le
+        $doctrine->persist($filme);
+        $doctrine->flush();//flush sincroniza os objetos com o banco de dados
         return $this->render('filmes/cadastro.html.twig');
         
     }
