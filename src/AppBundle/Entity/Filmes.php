@@ -15,21 +15,25 @@ class Filmes
     * @ORM\GeneratedValue(strategy="AUTO")
     */
     private $id;
+    
     /**
      *
      * @ORM\Column(type="string", length=200)
      */
     private $nome;
+    
     /**
      *
      * @ORM\Column(type="string", length=80)
      */
     private $genero;
+    
     /**
      *
      * @ORM\Column(type="boolean")
      */
-        private $lancamento;
+    private $lancamento;
+        
     function getId() {
         return $this->id;
     }

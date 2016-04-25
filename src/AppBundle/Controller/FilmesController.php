@@ -31,7 +31,15 @@ class FilmesController extends Controller
         /**
          * Função Response('mensagem de retorno html, forçar status')
          */
-        return $this->render('filmes/index.html.twig');
+        $doctrine = $this->getDoctrine()->getEntityManager();
+        
+        $filmes = $doctrine->getRepository('AppBundle:Filmes');// le o banco de dados
+        $retorno = $filmes->findAll();
+        
+        var_dump($retorno);
+        return $this->render('filmes/index.html.twig',
+                array('filmes' =>$retorno)
+        );
     }
     /**
      * @Route("/filmes/cadastro")
@@ -44,7 +52,7 @@ class FilmesController extends Controller
         $filme->setNome('Rec');
         
         $doctrine = $this->getDoctrine()->getEntityManager();//motor que grava e le
-        $doctrine->persist($filme);
+        $doctrine->persist($filme);//pra gravar o objeto
         $doctrine->flush();//flush sincroniza os objetos com o banco de dados
         return $this->render('filmes/cadastro.html.twig');
         
