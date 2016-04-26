@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Gênero</h1>
+    <table class='table-bordered col-md-12'>
+        <tr>
+            <th>Nome</th>
+        </tr>
+        {% for genero  in dados%}
+        <tr>
+            <td>{{ genero.nome}}</td>
+        </tr>
+        
+        {% endfor %}
+    </table>
+{% endblock %}

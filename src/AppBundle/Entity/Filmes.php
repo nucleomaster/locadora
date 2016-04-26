@@ -34,37 +34,65 @@ class Filmes
      */
     private $lancamento;
         
-    function getId() {
+    /**
+     * 
+     * @return int
+     */
+    public function getId() {
         return $this->id;
     }
 
-    function getNome() {
+    /**
+     * 
+     * @return string
+     */
+    public function getNome() {
         return $this->nome;
     }
 
-    function getGenero() {
+    /**
+     * 
+     * @return string
+     */
+    public function getGenero() {
         return $this->genero;
     }
 
-    function getLancamento() {
+    /**
+     * 
+     * @return boolean
+     */
+    public function getLancamento() {
         return $this->lancamento;
     }
-
-    function setId($id) {
-        $this->id = $id;
-    }
-
-    function setNome($nome) {
+    
+    /**
+     * 
+     * @param string $nome
+     */
+    public function setNome($nome) {
         $this->nome = $nome;
     }
 
-    function setGenero($genero) {
+    /**
+     * 
+     * @param string $genero
+     */
+    public function setGenero($genero) {
         $this->genero = $genero;
     }
-
-    function setLancamento($lancamento) {
+    
+    /**
+     * 
+     * @param boolean $lancamento
+     */
+    public function setLancamento($lancamento) {
+        if (is_bool($lancamento)){            
         $this->lancamento = $lancamento;
+        }else{
+            throw new \BadMethodCallException("O valor deve ser do tipo boleano");
+            
+        }
     }
-
     
 }
