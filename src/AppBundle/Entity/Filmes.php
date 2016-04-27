@@ -33,6 +33,24 @@ class Filmes
      * @ORM\Column(type="boolean")
      */
     private $lancamento;
+    
+    /**
+     *
+     * @ORM\Column(type="text")
+     */
+    private $sinopse;
+    
+    /**
+     *
+     * @ORM\Column(type="date")
+     */
+    private $data;
+    
+    /**
+     *
+     * @ORM\Column(type="string", length=120)
+     */
+    private $capa;
         
     /**
      * 
@@ -95,4 +113,76 @@ class Filmes
         }
     }
     
+
+    /**
+     * Set sinopse
+     *
+     * @param string $sinopse
+     *
+     * @return Filmes
+     */
+    public function setSinopse($sinopse)
+    {
+        $this->sinopse = $sinopse;
+
+        return $this;
+    }
+
+    /**
+     * Get sinopse
+     *
+     * @return string
+     */
+    public function getSinopse()
+    {
+        return $this->sinopse;
+    }
+
+    /**
+     * Set data
+     *
+     * @param \DateTime $data
+     *
+     * @return Filmes
+     */
+    public function setData($data)
+    {
+        $this->data = $data;
+
+        return $this;
+    }
+
+    /**
+     * Get data
+     *
+     * @return \DateTime
+     */
+    public function getData()
+    {
+        return $this->data;
+    }
+
+    /**
+     * Set capa
+     *
+     * @param string $capa
+     *
+     * @return Filmes
+     */
+    public function setCapa($capa)
+    {
+        $this->capa = $capa;
+
+        return $this;
+    }
+
+    /**
+     * Get capa
+     *
+     * @return string
+     */
+    public function getCapa()
+    {
+        return $this->capa;
+    }
 }

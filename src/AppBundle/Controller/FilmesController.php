@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Entity\Filmes;
+use \AppBundle\Entity\Genero;
 
 /**
  * Description of FilmesController
@@ -73,26 +74,44 @@ class FilmesController extends Controller {
     }
 
     /**
-     *  @Route("/filmes/genero")
+     *  @Route("/filmes/genero", name="genero_index")
      */
     public function generoAction() {
         $repositorio = $this->getEm()->getRepository('AppBundle:Genero');
-        $dados = $repositorio->findAll();
-
+        $dados = $repositorio->findBy(
+                array(),
+                array('nome'=>"ASC")
+                );
+                //ORDENAR EM ORDEM CRESCENTE (ASC) OU DESCRESCENTE (DESC)
         return $this->render('filmes/genero.html.twig', array(
                     'dados' => $dados
         ));
     }
 
     /**
-     * @Route("/filmes/genero/cadastro")
+     * @Route("/filmes/genero/cadastro", name="genero_cadastro")
      */
     public function generoCadastroAction() {
         return $this->render('filmes/genero-cadastro.html.twig');
     }
-
-    public function criarGeneroAction() {
+    
+    /**
+     * @Route("/filmes/genero/criar")
+     */
+    public function criarGeneroAction(Request $request)
+    {
+        $nomeGenero = $request->get('nome');
         
+        $genero = new Genero();
+        $genero->setNome($nomeGenero);
+        
+        $doctrine = $this->getEm();
+        $doctrine->persist($genero);
+        
+        $doctrine->flush();
+        
+        return $this->redirectToRoute('genero_index');
+        //redireciona para página de index
     }
 
 }
