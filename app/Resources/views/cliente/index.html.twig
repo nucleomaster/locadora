@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Cliente list</h1>
+    <h1>Listagem de clientes</h1>
 
     <table class="table">
         <thead>
@@ -10,25 +10,28 @@
                 <th>Nome</th>
                 <th>Endereco</th>
                 <th>Email</th>
-                <th>Datanascimento</th>
-                <th>Actions</th>
+                <th>Data de nascimento</th>
+                <th>Ação</th>
             </tr>
         </thead>
         <tbody>
         {% for cliente in clientes %}
             <tr>
-                <td><a href="{{ path('cliente_show', { 'id': cliente.id }) }}">{{ cliente.id }}</a></td>
+                <td><a href="{{ path('cliente_show', { 'id': cliente.id }) }}">{{ cliente.nome }}</a></td>
                 <td>{{ cliente.nome }}</td>
                 <td>{{ cliente.endereco }}</td>
                 <td>{{ cliente.email }}</td>
-                <td>{% if cliente.dataNascimento %}{{ cliente.dataNascimento|date('Y-m-d') }}{% endif %}</td>
+                <td>{% if cliente.dataNascimento %}{{ cliente.dataNascimento|date('d/m/Y') }}{% endif %}</td>
                 <td>
-                    <ul>
+                    <ul class="nav nav-pills">
+                        
                         <li>
-                            <a href="{{ path('cliente_show', { 'id': cliente.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('cliente_edit', { 'id': cliente.id }) }}">edit</a>
+                            <a href="{{ path('cliente_edit', { 'id': cliente.id }) }}">
+                                <span class=" glyphicon glyphicon-pencil"></span>Editar</a></li>
+                                <li>
+                            <a href="{{ path('cliente_delete', { 'id': cliente.id }) }}" class="btn btn-danger">
+                                <span class="glyphicon glyphicon-trash"></span>Deletar</a>
+                            
                         </li>
                     </ul>
                 </td>
@@ -39,7 +42,7 @@
 
     <ul>
         <li>
-            <a href="{{ path('cliente_new') }}">Create a new entry</a>
+            <a href="{{ path('cliente_new') }}" class="btn btn-primary">Novo Cliente</a>
         </li>
     </ul>
 {% endblock %}

@@ -2,7 +2,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity
  * @ORM\Table(name="cliente")
@@ -18,6 +18,13 @@ class Cliente {
     /**
      *
      * @ORM\Column(type="string", length=200)
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *          min=6,
+     *          max=20,
+     *          minMessage="O nome deve ter pelo menos 6 caracteres",
+     *          maxMessage="O nome deve ter no máximo 20 caracteres"
+     *          )
      */
     private $nome;
     
@@ -30,6 +37,7 @@ class Cliente {
     /**
      *
      * @ORM\Column(type="string", length=100)
+     * @Assert\Email(message="O valor informado não é um email válido")
      */
     private $email;
     

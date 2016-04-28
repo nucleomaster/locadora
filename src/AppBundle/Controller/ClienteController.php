@@ -42,7 +42,7 @@ class ClienteController extends Controller
     public function newAction(Request $request)
     {
         $cliente = new Cliente();
-        $form = $this->createForm('AppBundle\Form\ClienteType', $cliente);
+        $form = $this->createForm('AppBundle\Form\ClienteType', $cliente);//componente de formulário
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -67,11 +67,11 @@ class ClienteController extends Controller
      */
     public function showAction(Cliente $cliente)
     {
-        $deleteForm = $this->createDeleteForm($cliente);
+        /*$deleteForm = $this->createDeleteForm($cliente);*/
 
         return $this->render('cliente/show.html.twig', array(
             'cliente' => $cliente,
-            'delete_form' => $deleteForm->createView(),
+            //'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -105,21 +105,18 @@ class ClienteController extends Controller
     /**
      * Deletes a Cliente entity.
      *
-     * @Route("/{id}", name="cliente_delete")
-     * @Method("DELETE")
+     * @Route("/{id}/delete", name="cliente_delete")
+     * @Method("GET")
      */
     public function deleteAction(Request $request, Cliente $cliente)
     {
-        $form = $this->createDeleteForm($cliente);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
+        
             $em = $this->getDoctrine()->getManager();
-            $em->remove($cliente);
+            $em->remove($cliente);//remove ao invés de substituir
             $em->flush();
-        }
-
-        return $this->redirectToRoute('cliente_index');
+        
+            
+            return $this->redirectToRoute('cliente_index');
     }
 
     /**
