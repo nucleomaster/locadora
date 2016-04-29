@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Entity\Filmes;
 use \AppBundle\Entity\Genero;
+use \AppBundle\Form\FilmesType;
 
 /**
  * Description of FilmesController
@@ -60,17 +61,30 @@ class FilmesController extends Controller {
     /**
      * @Route("/filmes/cadastro")
      */
-    public function cadastroAction() {
+    public function cadastroAction(Request $request) {
         $filme = new Filmes();
-        $filme->setGenero('Terror');
-        $filme->setLancamento(false);
-        $filme->setNome('Donnie DArko');
-
-        $doctrine = $this->getEm(); //motor que grava e le
+        $form = $this->createForm(FilmesType::class, $filme);
+        
+        $form->handleRequest($request);
+        
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $doctrine = $this->getEm();
+            $doctrine->persist($filme);//colocar no banco de dados filme
+            $doctrine->flush();//sincroniza
+            return $this->redirectToRoute('filmes_index');
+            //getEm manipulador de entidades Entity Manager
+        }
+                //retorna true se o botão foi clicado
+        
+                //manda manipular o request        
+/*      $doctrine = $this->getEm(); //motor que grava e le
         $doctrine->persist($filme); //pra gravar o objeto
         $doctrine->flush(); //flush sincroniza os objetos com o banco de dados
-
-        return $this->render('filmes/cadastro.html.twig');
+  */
+        return $this->render('filmes/cadastro.html.twig', array(
+            'form_filmes'=> $form->createView()
+        ));
     }
 
     /**

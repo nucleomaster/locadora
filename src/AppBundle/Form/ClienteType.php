@@ -36,7 +36,7 @@ class ClienteType extends AbstractType
             //->add('dataNascimento', BirthdayType::class, array(
                 
             ->add('dataNascimento', FormType\BirthdayType::class, array(
-                'format'=>'ddMMyyyy'//ou dd/MMMM/yyyy
+                'format'=>'ddMMMyyyy'//ou dd/MMMM/yyyy
             ))//mudar ordem
         ;
     }
