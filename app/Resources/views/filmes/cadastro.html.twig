@@ -5,12 +5,34 @@
     Filmes
 {% endblock %}
 
+{% block stylesheets %}
+    <style>
+        .radio {
+            float: left;
+            margin-right: 20px;
+        }
+    </style>
+{% endblock %}
+
 {% block body %}
     <fieldset>
         <legend>Novo Filme</legend>
 
         {{form_start(form_filmes)}}
-        {{form_widget(form_filmes)}}
+        {{form_row(form_filmes.genero)}}
+        <div class="form-group">            
+        {{form_label(form_filmes.lancamento, 'É lançamento?')}}
+        {#label - rotulo#}
+        {{form_widget(form_filmes.lancamento, {
+            "attr":{
+                "class": "col-sm-10"
+                }
+                })
+            }}
+        {# passa atributos html/ referência / formulário / choice #}
+        {{form_errors(form_filmes.lancamento)}}
+        </div>
+        {{form_widget(form_filmes)}}{#imprime tudo#}
 
         <button id="salvar" name="salvar" class="btn btn-primary pull-right" >Salvar</button>
 

@@ -57,6 +57,27 @@ class FilmesController extends Controller {
         return $this->render('filmes/index.html.twig', array('filmes' => $retorno)
         );
     }
+    
+    /**
+     * 
+     * @Route("/filmes/filtrar/{filtro}", name="filmes_filtrar")
+     */    
+    public function filtrarAction($filtro)
+    {
+        $filmes = $doctrine->getRepository('AppBundle:Filmes');
+        if($filtro == 'lancamento')
+        {
+            $retorno = $filmes->findBy(
+                    array('lancamento' => true)
+                    );
+            }else
+            {
+                $retorno = $filmes ->findAll();
+            }
+        
+        return $this->render('filmes/index.html.twig', array('filmes' => $retorno));
+    }
+    
 
     /**
      * @Route("/filmes/cadastro")
@@ -69,6 +90,22 @@ class FilmesController extends Controller {
         
         if($form->isSubmitted() && $form->isValid())
         {
+            $pasta =  __DIR__ .'/../../../web/capas';
+                    /*constante global que mostra o caminho completo da pasta
+                     * volta 4 pastas
+                     */           
+            $imagem = $form['capa']->getData();
+            $ext = $imagem->guessExtension();
+            $nomeArquivo = uniqid().'.'.$ext;/*gera um nome de arquivo aleatório*/
+            
+            $imagem->move($pasta, $nomeArquivo);
+            $filme->setCapa($nomeArquivo);
+            //die($nomeArquivo);
+            
+            
+//            $form['capa']->getData()->move($pasta, $someNewFilename);
+            
+            /*die($pasta); - imprime erros*/
             $doctrine = $this->getEm();
             $doctrine->persist($filme);//colocar no banco de dados filme
             $doctrine->flush();//sincroniza

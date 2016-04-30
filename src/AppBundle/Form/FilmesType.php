@@ -26,7 +26,7 @@ class FilmesType extends AbstractType{
                 ))
                 ->add('data')
                 ->add('capa', FileType::class, array(
-                    'required'=>false
+                    'required'=>true
                 ));                
     }
     public function configureOptions(OptionsResolver $resolver)
