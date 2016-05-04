@@ -15,6 +15,23 @@
 {% block body %}
     
     <div class="row">
+        
+{% for flash_message in app.session.flashBag.get('info') %}
+            <div class="alert alert-warning alert-dismissible" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              {{ flash_message }}
+            </div>
+        
+{% endfor %}
+        
+{% for flash_message in app.session.flashBag.get('cadastro') %}
+            <div class="alert alert-success alert-dismissible" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              {{ flash_message }}
+            </div>
+        
+{% endfor %}
+
 
 		<section class="content">
                         <a href="{{path('app_filmes_cadastro')}}" class="btn btn-primary pull-right">
@@ -31,7 +48,7 @@
 								<button type="button" class="btn btn-success btn-filter" data-target="pagado">Disponíveis</button>
 								<button type="button" class="btn btn-warning btn-filter" data-target="pendiente">Locados</button>
 								<button type="button" class="btn btn-danger btn-filter" data-target="cancelado">Reservados</button>
-								<a href="" class="btn btn-primary btn-filter" data-target="cancelado">Lançamentos</a>
+								<a href="{{ path('filmes_filtrar', {'filtro':'lancamento'}) }}" class="btn btn-primary btn-filter" data-target="cancelado">Lançamentos</a>
 								<a href="{{ path('filmes_index') }}" class="btn btn-default btn-filter" data-target="all">Todos</a>
 							</div>
 						</div>
@@ -54,12 +71,13 @@
 										<td>
 											<div class="media">
 												<a href="#" class="pull-left">
-													<img src="/capas/{{ filme.capa }}" width="200" height="300" class="media-photo">
+													<img src="/capas/{{ filme.nomeCapa }}" width="200" height="300" class="media-photo">
 												</a>
 												<div class="media-body">
+                                                                                                        <a href="{{ path('filmes_deletar', {'id': filme.id }) }}" class="btn btn-danger pull-right"><span class="glyphicon glyphicon-trash"></span></a>
 													<span class="media-meta pull-right">{{ filme.data|date('d/m/Y') }}</span>
 													<h4 class="title">
-                                                                                                            {{ filme.nome }}
+                                                                                                            <a href="{{ path('filmes_editar', {'id': filme.id }) }}">{{ filme.nome }}</a>
                                                                                                             {% if filme.lancamento %}
 														<span class="pull-right pagado">(Lançamento)</span>
                                                                                                                 {% endif%}

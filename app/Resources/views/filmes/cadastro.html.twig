@@ -33,7 +33,11 @@
         {{form_errors(form_filmes.lancamento)}}
         </div>
         {{form_widget(form_filmes)}}{#imprime tudo#}
-
+        {% if capa %}
+        <div>
+            <img src="/capas/{{ capa }}" class="media-photo">
+        </div>
+        {% endif %}
         <button id="salvar" name="salvar" class="btn btn-primary pull-right" >Salvar</button>
 
         {{form_end(form_filmes)}}

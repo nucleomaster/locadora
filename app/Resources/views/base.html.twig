@@ -4,7 +4,7 @@
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel="stylesheet" href="{{asset('css/bootstrap.css')}}">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script> 
+        {#<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script> #}
         <script type="text/javascript" src="{{asset('js/bootstrap.js')}}"></script>
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
@@ -28,20 +28,9 @@
             <li><a href="{{path('filmes_index')}}">Filmes</a></li>
             <li><a href="{{path('genero_index')}}">Gênero</a></li>
             <li><a href="{{path('cliente_index')}}">Clientes</a></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li role="separator" class="divider"></li>
-                <li class="dropdown-header">Nav header</li>
-                <li><a href="#">Separated link</a></li>
-                <li><a href="#">One more separated link</a></li>
-              </ul>
-            </li>
+            
           </ul>
-          
+            <a href="logout" class="btn btn-info pull-right">{{ app.user }}</a>
         </div><!--/.nav-collapse -->
       </div>
     </nav>

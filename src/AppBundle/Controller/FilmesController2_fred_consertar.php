@@ -104,48 +104,44 @@ class FilmesController extends Controller {
     public function filmesEditarAction(Request $request, $id)
     {
         $repositorio = $this->getEm()->getRepository('AppBundle:Filmes');
-        
-        
+        //pegar o repositorio/pegar todas as informações relacionadas à entidade filmes
         $filme = $repositorio->find($id);
         $capa = $filme->getNomeCapa();
+
+
         
-        
-        $form = $this->createForm(FilmesType::class, $filme); 
-        $form->handleRequest($request);
-        
-        if ($form->isSubmitted() && $form->isValid())
-        {
-            return $this->formSubmit($filme, $form);
-        }
-        
-        
+
+
         return $this->render('filmes/cadastro.html.twig', array(
-            'form_filmes' => $form->createView(),
-            'capa' => $capa
+            'form_filmes'=> $form->createView(),
+            'capa'=> $capa
         ));
+
     }
 
     /**
      * @Route("/filmes/cadastro")
      */
-    public function cadastroAction(Request $request)
-    {
+    public function cadastroAction(Request $request) {
         
-        $filme = new Filmes();        
-        $form = $this->createForm(FilmesType::class, $filme); 
+        
+        $filme = new Filmes();
+         $form = $this->createForm(FilmesType::class, $filme);
         $form->handleRequest($request);
-        $capa = $filme->getNomeCapa(); 
-                
-        if ($form->isSubmitted() && $form->isValid())
-        {
-            
-            return $this->formSubmit($filme, $form);
-        }
+                if($form->isSubmitted() && $form->isValid()){
+                    return $this->formSubmit($filme, $form)
+                }
+
         
-        
+                //retorna true se o botão foi clicado
+
+                //manda manipular o request
+/*      $doctrine = $this->getEm(); //motor que grava e le
+        $doctrine->persist($filme); //pra gravar o objeto
+        $doctrine->flush(); //flush sincroniza os objetos com o banco de dados
+  */
         return $this->render('filmes/cadastro.html.twig', array(
-            'form_filmes' => $form->createView(),
-            'capa' => $capa
+            'form_filmes'=> $form->createView()
         ));
     }
     
@@ -157,29 +153,34 @@ class FilmesController extends Controller {
      */
     private function formSubmit($filme, $form)
        
-       {
-        
-            $pasta = __DIR__.'/../../../web/capas';
+       
+        {
+            $pasta =  __DIR__ .'/../../../web/capas';
+                    /*constante global que mostra o caminho completo da pasta
+                     * volta 4 pastas
+                     */
             $imagem = $form['capa']->getData();
             $ext = $imagem->guessExtension();
-            
-            $nomeArquivo = uniqid().'.'.$ext;
-            
+            $nomeArquivo = uniqid().'.'.$ext;/*gera um nome de arquivo aleatório*/
+
             $imagem->move($pasta, $nomeArquivo);
-            
             $filme->setCapa($nomeArquivo);
-            
+            //die($nomeArquivo);
+
+
+//            $form['capa']->getData()->move($pasta, $someNewFilename);
+
+            /*die($pasta); - imprime erros*/
             $doctrine = $this->getEm();
-            $doctrine->persist($filme);
-            $doctrine->flush();
-            
-            
-            
+            $doctrine->persist($filme);//colocar no banco de dados filme
+            $doctrine->flush();//sincroniza
+
+            $this->addFlash('cadastro', 'O filme foi cadastrado com sucesso.');
+
+
             return $this->redirectToRoute('filmes_index');
-                      
-    }
-        
-        
+            //getEm manipulador de entidades Entity Manager
+        }
 
     /**
      *  @Route("/filmes/genero", name="genero_index")

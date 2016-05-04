@@ -24,6 +24,10 @@ class ClienteController extends Controller
      */
     public function indexAction()
     {
+        $user = $this->getUser();
+        
+        
+        
         $em = $this->getDoctrine()->getManager();
 
         $clientes = $em->getRepository('AppBundle:Cliente')->findAll();

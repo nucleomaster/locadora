@@ -186,10 +186,31 @@ class Filmes
     /**
      * Get capa
      *
-     * @return string
+     * @return Symfony\Component\HttpFoundation\File\File
      */
     public function getCapa()
     {
+            
+    if (is_null($this->capa) || $this->capa == '')
+    {
+        return"";
+    }else
+    {
+        $pasta = __DIR__ . '/../../../web/capas/' .  $this->capa; 
+        $file = new \Symfony\Component\HttpFoundation\File\File($pasta);
+        //só serve para controle do formulário na função GETcapa
+        return $file;
+    }
+    }
+    
+    /**
+     * Retorna o nome da capa cadastrada
+     * @return string Description
+     */
+    public function getNomeCapa()
+    {
+        
         return $this->capa;
     }
 }
+
